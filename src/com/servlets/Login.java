@@ -19,25 +19,29 @@ public class Login extends HttpServlet {
      */
     public Login() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		System.out.println(request.getParameterNames());
+		String useremail=request.getParameter("email");
 		
+		String nextPage="";
+		
+		if(useremail.equalsIgnoreCase("admin@demo.com") || useremail.equalsIgnoreCase("user@demo.com")){
+			nextPage="Home.html";
+		}
+		
+		response.sendRedirect(nextPage);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 		System.out.println("In Post");
 	}
