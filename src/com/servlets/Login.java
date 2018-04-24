@@ -1,11 +1,18 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.demo.model.PaymentModel;
+import com.xml.util.XmlUtil;
 
 /**
  * Servlet implementation class Login
@@ -25,15 +32,32 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
+		HttpSession sess = request.getSession();
 		
 		String useremail=request.getParameter("email");
 		
 		String nextPage="";
 		
-		if(useremail.equalsIgnoreCase("admin@demo.com") || useremail.equalsIgnoreCase("user@demo.com")){
-			nextPage="Home.html";
+		if(useremail.equalsIgnoreCase("admin@demo.com"))
+		{
+			
+			sess.setAttribute("loginUser", useremail);
+			nextPage="AdminHome.jsp";
 		}
+	
+		else{
+			sess.setAttribute("loginUser", useremail);
+			XmlUtil util = new XmlUtil();
+			List<PaymentModel> payList =  util.readxml();
+			
+			sess.setAttribute("payList", payList);
+			nextPage="Home.jsp";
+		}
+			
+	
+			
 		
 		response.sendRedirect(nextPage);
 	}
