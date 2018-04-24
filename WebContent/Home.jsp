@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +20,32 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="Home.html">Home <span class="sr-only">(current)</span></a>
       </li>
      
-      <li class="nav-item dropdown">
+     
+     <li class="nav-item ">
+        <a class="nav-link" href="PaymentInitiate.jsp">Initiate Payment</a>
+      </li>
+     
+      <li class="nav-item ">
+        <a class="nav-link" href="#">Schedule Payment</a>
+      </li>
+      
+       <li class="nav-item ">
+        <a class="nav-link" href="#">Other Payments</a>
+      </li>
+     <!--  <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Payment
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Initiate Payment</a>
+          <a class="dropdown-item" href="PaymentInitiate.html">Initiate Payment</a>
           <a class="dropdown-item" href="#">Schedule Payment</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Other Payments</a>
         </div>
-      </li>
+      </li> -->
       
         <li class="nav-item">
         <a class="nav-link" href="#">TBD</a>
@@ -42,132 +55,73 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> -->
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0" action="Login.jsp">
+    	
+    	<a href="Login.jsp"><button class="btn btn btn-outline-dark  my-2 my-sm-0" type="submit">Logout</button> </a>&nbsp;&nbsp;
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
     </form>
   </div>
 </nav>  
 <br> <br>
 
-<div style="margin-left: 5%;">
+<div align="right" style="margin-right: 5%;" >
+  <h3 >Welcome <%-- <%=session.getAttribute("loginUser")%> --%></h3>
+  <p class="lead">Your Account Balance : 234234.00 </p>
+  <!-- <hr class="my-1">
+  <p>Please sign in to continue</p> -->
+  <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
+</div>
+
+<div style="margin-left: 5%;" >
 <form>
 
+<h3>DashBoard</h3>
+<table class="table table-bordered" style="width: 50%;">
 
-
-
-<table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Date</th>
+      <th scope="col">Details</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>18/04/2018</td>
+      <td>Payment to user 1</td>
+      <td>2560.00</td>
+      <td>Completed</td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+     <td>20/04/2018</td>
+      <td>Test Payment 2 </td>
+      <td>3500.00</td>
+      <td>Completed</td>
     </tr>
     <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+     <td>25/04/2018</td>
+      <td>Regular payment to beneficiary</td>
+      <td>5300.00</td>
+      <td>In Progress</td>
     </tr>
+   
+    
+  <c:forEach items="${payList}" var="payModel">
+ 	<tr>
+   <td>${payModel.date}</td>
+      <td>${payModel.details}</td>
+       <td>${payModel.amount}</td>
+      <td>${payModel.status}</td> 
+    </tr>
+
+</c:forEach> 
+    
   </tbody>
 </table>
 
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
-
-
-
-		<!-- 	<div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Select Account</label>
-     <button for="colFormLabelSm" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Account
-  </button>
-   <div class="dropdown-menu" >
-  <a class="dropdown-item" href="#">Current Account</a>
-  <a class="dropdown-item" href="#">Savings Account</a>
-  <a class="dropdown-item" href="#">International Account</a>
-</div>
-    </div> -->
-    
-   <!--  <div class="form-group row">
-   <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Select Account</label>
-   <div class="col-sm-3">
-  <select class="form-control form-control-sm" id="sel1">
-  	<option value="0">Select</option>
-    <option value="Current">Current Account</option>
-    <option value="Savings">Savings Account</option>
-    <option value="International">International Account</option>
-  </select>
-  </div>
-</div> -->
-    
-   <!--  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Beneficiary Name</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control form-control-sm" id="colFormLabelSm"  >
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">IBAN Number</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control form-control-sm" id="colFormLabelSm"  >
-    </div>
-  </div><div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Amount</label>
-    <div class="col-sm-3">
-      <input type="number" class="form-control form-control-sm" id="colFormLabelSm"  >
-    </div>
-  </div><div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-    <div class="col-sm-3">
-      <input type="email" class="form-control form-control-sm" id="colFormLabelSm"  >
-    </div>
-  </div> -->
-  
-<!--  <button type="submit" class="btn btn-primary">Submit</button> -->
 </form>
 </div>
 
