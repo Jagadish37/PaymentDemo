@@ -18,21 +18,32 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item ">
+        <a class="nav-link" href="#">Home </a>
       </li>
      
-      <li class="nav-item dropdown">
+      <li class="nav-item active">
+        <a class="nav-link" href="PaymentInitiate.html">Initiate Payment <span class="sr-only">(current)</span></a>
+      </li>
+     
+      <li class="nav-item ">
+        <a class="nav-link" href="PaymentInitiate.html">Schedule Payment</a>
+      </li>
+      
+       <li class="nav-item ">
+        <a class="nav-link" href="PaymentInitiate.html">Other Payments</a>
+      </li>
+     <!--  <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Payment
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Initiate Payment</a>
+          <a class="dropdown-item" href="PaymentInitiate.html">Initiate Payment</a>
           <a class="dropdown-item" href="#">Schedule Payment</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Other Payments</a>
         </div>
-      </li>
+      </li> -->
       
         <li class="nav-item">
         <a class="nav-link" href="#">TBD</a>
@@ -51,7 +62,7 @@
 <br> <br>
 
 <div style="margin-left: 5%;">
-<form>
+<form action="Payments" method="post">
 
 <h2>Payment Initiation</h2>
 
@@ -70,7 +81,7 @@
     <div class="form-group row">
    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Select Account</label>
    <div class="col-sm-3">
-  <select class="form-control form-control-sm" id="sel1">
+  <select name="fromaccount" class="form-control form-control-sm" id="sel1">
   	<option value="0">Select</option>
     <option value="Current">Current Account</option>
     <option value="Savings">Savings Account</option>
@@ -82,26 +93,32 @@
     <div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Beneficiary Name</label>
     <div class="col-sm-3">
-      <input type="text" class="form-control form-control-sm" id="colFormLabelSm"  >
+      <input type="text" name="bName" class="form-control form-control-sm" id="colFormLabelSm" required="required">
     </div>
   </div>
   <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">IBAN Number</label>
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">IBAN/Account Number</label>
     <div class="col-sm-3">
-      <input type="text" class="form-control form-control-sm" id="colFormLabelSm"  >
+      <input type="text" name="iban" class="form-control form-control-sm" id="colFormLabelSm"  required="required">
     </div>
   </div><div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Amount</label>
     <div class="col-sm-3">
-      <input type="number" class="form-control form-control-sm" id="colFormLabelSm"  >
+      <input type="number" name="Amount" class="form-control form-control-sm" id="colFormLabelSm"  required="required">
     </div>
   </div><div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
     <div class="col-sm-3">
-      <input type="email" class="form-control form-control-sm" id="colFormLabelSm"  >
+      <input type="email" name="email" class="form-control form-control-sm" id="colFormLabelSm"  required="required">
     </div>
   </div>
-  
+  <div class="form-group row">
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Remarks</label>
+    <div class="col-sm-3">
+      <input type="text" name="remarks" class="form-control form-control-sm" id="colFormLabelSm"  required="required">
+    </div>
+  </div>
+  <input type="hidden" name="path" value="toConfirm">
  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
