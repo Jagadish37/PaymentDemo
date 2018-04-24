@@ -51,39 +51,44 @@
 <br> <br>
 
 <div style="margin-left: 5%;">
-<form>
+<form action="Payments" method="post">
 
 <h2>Payment Confirmation</h2>
 
 			<div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">From Account Number</label>
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">From Account</label>
     <div class="col-sm-3">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="12312423534343">
+      <input type="text" readonly class="form-control" id="staticEmail" value=<%=session.getAttribute("fromaccount") %>>
     </div>
     </div>
     <div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Beneficiary Name</label>
     <div class="col-sm-3">
-     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="Demo Customer">
+     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<%=session.getAttribute("bName") %>>
     </div>
   </div>
   <div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">IBAN Number</label>
     <div class="col-sm-3">
-       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="GB2347869487623987462">
+       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<%=session.getAttribute("iban") %>>
     </div>
   </div><div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Amount</label>
     <div class="col-sm-3">
-       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="34567.00">
+       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<%=session.getAttribute("Amount") %>>
     </div>
   </div><div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
     <div class="col-sm-3">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<%=session.getAttribute("email") %>>
+    </div>
+  </div><div class="form-group row">
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Remarks</label>
+    <div class="col-sm-3">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<%=session.getAttribute("remarks") %>>
     </div>
   </div>
-  
+  <input type="hidden" name="path" value="confirmed">
  <button type="submit" class="btn btn-primary">Confirm</button>
 </form>
 </div>
