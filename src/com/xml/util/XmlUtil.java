@@ -2,6 +2,7 @@ package com.xml.util;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -18,12 +20,16 @@ import org.jdom2.output.XMLOutputter;
 import com.demo.model.PaymentModel;
 
 public class XmlUtil {
+	
+	
+	SAXBuilder builder = new SAXBuilder();
+	ClassLoader classLoader = getClass().getClassLoader();
+	File xmlfile = new File(classLoader.getResource("\\main\\resources\\Payment.xml").getFile());
 
 	public List<String> parseXML(String name, HashMap<String, String> hm) {
 
-		SAXBuilder builder = new SAXBuilder();
-		ClassLoader classLoader = getClass().getClassLoader();
-		File xmlfile = new File(classLoader.getResource("\\main\\resources\\Payment.xml").getFile());
+		
+		System.out.println(xmlfile);
 		List<String> listofPayments = new ArrayList<>();
 
 		try {
@@ -70,12 +76,34 @@ public class XmlUtil {
 		return listofPayments;
 	}
 
+	
+	public String getMainbalance(){
+		
+		String mainBal=null;
+		Document document;
+		try {
+			document = (Document) builder.build(xmlfile);
+			Element rootNode = document.getRootElement();
+			mainBal=rootNode.getChildText("mainbalance");
+			
+			
+			
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		return mainBal;
+	}
+	
 	public List<PaymentModel> readxml (){
 		
-		
-		SAXBuilder builder = new SAXBuilder();
-		ClassLoader classLoader = getClass().getClassLoader();
-		File xmlfile = new File(classLoader.getResource("\\main\\resources\\Payment.xml").getFile());
 		List<PaymentModel> listofPayments = new ArrayList<>();
 
 		try {
