@@ -42,8 +42,24 @@ public class Payments extends HttpServlet {
 		HashMap<String, String> hm = new HashMap<>();
 		if(path.equalsIgnoreCase("toConfirm"))
 		{
+			
+			String amount = request.getParameter("Amount");
+			String charges= "";
 			for (String s : Collections.list(names))
-				session.setAttribute(s, request.getParameter(s));;
+				session.setAttribute(s, request.getParameter(s));
+			if(request.getParameter("modeofpay").equalsIgnoreCase("Faster"))
+				charges="5.00";
+			else
+				charges="0.00";
+			
+			session.setAttribute("charges" , charges);
+			String totalAmount=amount+charges;
+			session.setAttribute("totalAmount", totalAmount);
+			String mainbalance =  xutil.getMainbalance();
+			
+			float bal= (Float.parseFloat(mainbalance)) - (Float.parseFloat(totalAmount));
+		
+			
 			response.sendRedirect("PConfirmation.jsp");
 		}
 		
