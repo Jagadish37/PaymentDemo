@@ -45,5 +45,4 @@ public class PaymentModel implements Serializable{
 		return super.toString();
 	}
 	
-	
 }
