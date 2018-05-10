@@ -1,0 +1,47 @@
+node {
+
+def mvnHome
+
+properties([parameters
+(   [string(defaultValue: '', 
+    description: 'Nexus Repo Name', name: 'Nexus_WAR_NAME', trim: false),
+    string(defaultValue: 'http://localhost:8081/repository/PaymentDemo/PaymentDemo/PaymentDemo/0.1/', 
+    description: 'Nexus Url', name: 'nexusurl', trim: false),
+    string(defaultValue: 'PaymentDemo-0.1.war', 
+    description: 'War Name', name: 'localwar', trim: false),
+    string(defaultValue: 'PaymentDemo-0.1.pom', 
+    description: 'Pom Name', name: 'localpom', trim: false)]
+    )])
+    
+    
+   stage('NexusDownload') { 
+   
+   echo "Echoing inside nexus input ${Nexus_WAR_NAME} & ${nexusurl}  and ${nexusurl}${localwar} "
+      bat (/ powershell.exe  "D:\Projects\Budapest\NexusDownload.ps1 -nexusrepo  ${nexusurl}${localwar} -localpath ${localwar}"/)
+      
+       bat (/ powershell.exe  "D:\Projects\Budapest\NexusDownload.ps1 -nexusrepo  ${nexusurl}${localpom} -localpath pom.xml"/)
+     
+       bat(/copy *.war  target \/y /)
+   }
+   
+   stage('Tomcat Deploy')
+   
+   {
+     mvnHome = tool 'M3'
+     
+    bat(/"${mvnHome}\bin\mvn" tomcat7:deploy-only -Dmaven.tomcat.update=true/)
+
+     
+   }
+   
+    stage('Jmeter Load Testing'){
+        bat 'd:/apache-jmeter-3.1/bin/jmeter.bat -n -t d:/apache-jmeter-3.1/bin/PaymentDemo_loadTest.jmx -l PaymentLoadTests.jtl'
+        step([$class: 'ArtifactArchiver', artifacts: '**//*.jtl'])
+
+   }
+   
+   stage('Report Generation'){
+      perfReport percentiles: '0,50,90,100', sourceDataFiles: '**//*.jtl'
+   }
+   
+}
