@@ -1,23 +1,28 @@
 node {
 
 def mvnHome
-
+def git
 properties([parameters
 (   [string(defaultValue: '', 
     description: 'Nexus Repo Name', name: 'Nexus_WAR_NAME', trim: false),
-    string(defaultValue: 'http://localhost:8081/repository/PaymentDemo/PaymentDemo/PaymentDemo/0.1/', 
+    string(defaultValue: '', 
     description: 'Nexus Url', name: 'nexusurl', trim: false),
-    string(defaultValue: 'PaymentDemo-0.1.war', 
+    string(defaultValue: '', 
     description: 'War Name', name: 'localwar', trim: false),
-    string(defaultValue: 'PaymentDemo-0.1.pom', 
+    string(defaultValue: '', 
     description: 'Pom Name', name: 'localpom', trim: false)]
     )])
     
     
    stage('NexusDownload') { 
+       
+    /*   git = tool 'git'
+   
+   bat(/"${git}" cd D:\Projects\Budapest\PaymentDemo /)*/
+   
    
    echo "Echoing inside nexus input ${Nexus_WAR_NAME} & ${nexusurl}  and ${nexusurl}${localwar} "
-      bat (/ powershell.exe  "D:\Projects\Budapest\NexusDownload.ps1 -nexusrepo  ${nexusurl}${localwar} -localpath ${localwar}"/)
+      bat (/ powershell.exe  "D:\Projects\Budapest\NexusDownload.ps1 -nexusrepo  ${nexusurl}${localwar} -localpath PaymentDemo-0.1.war"/)
       
        bat (/ powershell.exe  "D:\Projects\Budapest\NexusDownload.ps1 -nexusrepo  ${nexusurl}${localpom} -localpath pom.xml"/)
      
@@ -29,7 +34,9 @@ properties([parameters
    {
      mvnHome = tool 'M3'
      
-    bat(/"${mvnHome}\bin\mvn" tomcat7:deploy-only -Dmaven.tomcat.update=true/)
+     bat(/"${mvnHome}\bin\mvn" tomcat7:undeploy /)
+    
+    bat(/"${mvnHome}\bin\mvn" tomcat7:deploy-only/)
 
      
    }
@@ -38,6 +45,11 @@ properties([parameters
         bat 'd:/apache-jmeter-3.1/bin/jmeter.bat -n -t d:/apache-jmeter-3.1/bin/PaymentDemo_loadTest.jmx -l PaymentLoadTests.jtl'
         step([$class: 'ArtifactArchiver', artifacts: '**//*.jtl'])
 
+   }
+   
+   stage('Selenium - Functional Testing'){
+       bat '''cd D:\\Users\\EX52661\\.jenkins\\workspace\\PaymentPipeline
+            mvn -Dtest=LoginFunctionalTestUI test'''
    }
    
    stage('Report Generation'){
