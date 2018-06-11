@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 public class PaymentModel implements Serializable{
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4661864829191447679L;
 	private String date;
 	private String details;
 	private String amount;
 	private String status;
+	private String benName;
 	
 	
 	public String getDate() {
@@ -44,5 +43,12 @@ public class PaymentModel implements Serializable{
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
+	public String getBenName() {
+		return benName;
+	}
+	public void setBenName(String benName) {
+		this.benName = benName;
+	}
+	
 	
 }
