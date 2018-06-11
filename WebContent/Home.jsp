@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">NavBar</a>
+  <a class="navbar-brand" href="#">Payment Portal</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -65,22 +65,38 @@
 </nav>  
 <br> <br>
 
-<div align="right" style="margin-right: 5%;" >
-  <h3 >Welcome <%-- <%=session.getAttribute("loginUser")%> --%></h3>
-  <p class="lead">Your Account Balance : 234234.00 </p>
-  <!-- <hr class="my-1">
-  <p>Please sign in to continue</p> -->
-  <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
-</div>
+	<div class="row" style="width: 95%;">
 
-<div style="margin-left: 5%;" >
+		<div class="col-sm-6" >
+			<h3 style="margin-left: 5%;">DashBoard</h3>
+		</div>
+		<div class="col-sm-6">
+			<div align="right" style="margin-right: 4%;">
+				<h3>
+					Welcome
+					<%--  <%=session.getAttribute("loginUser")%> --%>
+				</h3>
+				<p class="lead">
+					Your Account Balance :
+					<%=session.getAttribute("RemainBal") %>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<div style="margin-left: 2%;" >
 <form>
 
-<h3>DashBoard</h3>
-<table class="table table-bordered" style="width: 50%;">
 
-  <thead class="thead-dark">
+
+<div class="row" style="width: 95%;">
+  <div class="col-sm-6">
+<p>
+<h4>Recent Transactions</h4>
+</p>
+<table class="table table-bordered" >
+  <thead class="table-info">
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Details</th>
@@ -121,7 +137,35 @@
     
   </tbody>
 </table>
+</div>
+  <div class="col-sm-6">
+  <p>
+<h4>Favorite Transactions</h4>
+</p>
+  <table class="table table-bordered" >
 
+  <thead class="table-success">
+    <tr>
+      <th scope="col">Beneficiary</th>
+      <th scope="col">Details</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   <c:forEach items="${favList}" var="payModel">
+ 	<tr>
+   <td>${payModel.benName}</td>
+      <td>${payModel.details}</td>
+       <td>${payModel.amount}</td>
+      <td><a href="#" class="btn btn-primary">Initiate</a></td> 
+    </tr>
+
+</c:forEach> 
+  </tbody>
+</table>
+  </div>
+  </div>
 </form>
 </div>
 
