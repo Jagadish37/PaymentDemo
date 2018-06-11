@@ -20,65 +20,85 @@ import com.xml.util.XmlUtil;
 @WebServlet("/Payments")
 public class Payments extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Payments() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String path =request.getParameter("path");
+	public Payments() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String path = request.getParameter("path");
 		XmlUtil xutil = new XmlUtil();
-		HttpSession session= request.getSession();
-		Enumeration<String> names=  request.getParameterNames();
-		Enumeration<String> sessionNames=session.getAttributeNames();
+		HttpSession session = request.getSession();
+		Enumeration<String> names = request.getParameterNames();
+		Enumeration<String> sessionNames = session.getAttributeNames();
 		HashMap<String, String> hm = new HashMap<>();
-		if(path.equalsIgnoreCase("toConfirm"))
-		{
-			
+		if (path.equalsIgnoreCase("toConfirm")) {
+
 			String amount = request.getParameter("Amount");
-			String charges= "";
+			String charges = "";
 			for (String s : Collections.list(names))
 				session.setAttribute(s, request.getParameter(s));
-			if(request.getParameter("modeofpay").equalsIgnoreCase("Faster"))
-				charges="5.00";
+			if (request.getParameter("modeofpay").equalsIgnoreCase("Faster"))
+				charges = "5.00";
 			else
-				charges="0.00";
-			
-			session.setAttribute("charges" , charges);
-			String totalAmount=amount+charges;
+				charges = "0.00";
+
+			session.setAttribute("charges", charges);
+			String totalAmount = Double.toString(Double.parseDouble(amount) + Double.parseDouble(charges));
 			session.setAttribute("totalAmount", totalAmount);
-			String mainbalance =  xutil.getMainbalance();
+			session.setAttribute("Amount", totalAmount);
+			String mainbalance = xutil.getMainbalance();
+
+			double bal = (Double.parseDouble(mainbalance)) - (Double.parseDouble(totalAmount));
+
+			String remainBal= Double.toString(bal);
 			
-			float bal= (Float.parseFloat(mainbalance)) - (Float.parseFloat(totalAmount));
-		
+			System.out.println("Printing the remain balance"+bal );
 			
+			xutil.setMainbalance(remainBal);
+			
+			session.setAttribute("RemainBal", remainBal);
+
 			response.sendRedirect("PConfirmation.jsp");
 		}
-		
-		if(path.equalsIgnoreCase("confirmed"))
-		{
-			for (String s : Collections.list(sessionNames))
-						hm.put(s, session.getAttribute(s).toString());
-			xutil.parseXML(path,hm);
+
+		if (path.equalsIgnoreCase("confirmed")) {
 			
+			for (String s : Collections.list(sessionNames))
+				hm.put(s, session.getAttribute(s).toString());
+			xutil.parseXML(path, hm);
+
 			response.sendRedirect("Receipt.jsp");
 		}
 		
 		
+		if (path.equalsIgnoreCase("favorite")) {
+			
+			for (String s : Collections.list(sessionNames))
+				hm.put(s, session.getAttribute(s).toString());
+			xutil.parseXML(path, hm);
+
+			response.sendRedirect("Home.jsp?message=Your trasaction has been added to favorites ");
+		}
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
