@@ -19,7 +19,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="Home.html">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="Home.jsp">Home <span class="sr-only">(current)</span></a>
       </li>
      
      
@@ -66,7 +66,7 @@
 
 <div align="right" style="margin-right: 5%;" >
   <h3 >Welcome User 123</h3>
-  <p class="lead">Your Account Balance : 234234.00 </p>
+  <p class="lead">Your Account Balance : <%=session.getAttribute("RemainBal") %> </p>
   <!-- <hr class="my-1">
   <p>Please sign in to continue</p> -->
   <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
@@ -82,8 +82,9 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">Success</h5>
-    <p class="card-text">Your payment for amount <%=session.getAttribute("Amount") %>  has been successfully processed.</p>
-    <a href="Login?email=random" class="btn btn-primary">Home</a>
+    <p class="card-text" id= "cardtext" >Your payment for amount <%=session.getAttribute("totalAmount") %>  has been successfully processed.</p>
+    <a href="Login?email=random" class="btn btn-primary">Home</a>  <a href="#" class="btn" id="fav" ><img src="img/heart-blue-24.png"> Set as Favorite  </a> 
+    
   </div>
  <!--  <div class="card-footer text-muted">
     2 days ago
@@ -93,11 +94,53 @@
 </form>
 </div>
 
-
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src=" https://code.jquery.com/jquery-3.3.1.js" ></script>
+   <!--  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+   
+     <script type="text/javascript">
+    
+  
+     jQuery(function($) {
+		 
+			 
+			  $("#fav").click(function(){
+				  
+				  
+				  $.get( "Payments?path=favorite", function() {
+					  
+					  $("#cardtext").html( "Your trasaction has been added to favorites" );
+					  $("#fav").hide();
+					})
+					
+					/* $.ajax({
+						  url: "Payments?path=favorite",
+						  success: function(result)
+					        {
+							  $("#cardtext").html( "Your trasaction has been added to favorites" );
+					        }
+						}); */
+			  }); 
+			 
+			
+			$("#fav").hover(
+				
+				
+				function() {
+					$("#fav").html('<img src="img/heart-24.png"> Set as Favorite</img>');
+				  }, function() {
+					 
+					  $("#fav").html('<img src="img/heart-blue-24.png"> Set as Favorite</img>');
+				  }
+
+			);
+
+		});
+	</script>
+   
+    
   </body>
 </html>
