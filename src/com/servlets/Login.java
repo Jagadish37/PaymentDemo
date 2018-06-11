@@ -51,8 +51,13 @@ public class Login extends HttpServlet {
 			sess.setAttribute("loginUser", useremail);
 			XmlUtil util = new XmlUtil();
 			List<PaymentModel> payList =  util.readxml();
-			
 			sess.setAttribute("payList", payList);
+			List<PaymentModel> favList =  util.getFavorites();
+			sess.setAttribute("favList", favList);
+			
+			String remainBal=util.getMainbalance();
+			sess.setAttribute("RemainBal", remainBal);
+			
 			nextPage="Home.jsp";
 		}
 			
